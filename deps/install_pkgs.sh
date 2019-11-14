@@ -179,20 +179,20 @@ function upgrade_cmake() {
 }
 
 function upgrade_bison() {
-  BISON30=bison-3.0
-  BISON_URL=https://ftp.gnu.org/gnu/bison/${BISON30}.tar.gz
+  BISON34=bison-3.4
+  BISON_URL=https://ftp.gnu.org/gnu/bison/${BISON34}.tar.gz
  
   # check the existing version first
   BISON_VERSION=`bison --version | grep Bison | cut -b 19-21 | tr -d [.]`
-  if [[ ${BISON_VERSION} -ge 30 ]]; then
-     echo "[+] bison version is 3.0 or greater. skipping upgrade"
+  if [[ ${BISON_VERSION} -ge 34 ]]; then
+     echo "[+] bison version is 3.4 or greater. skipping upgrade"
      return 0
   fi
 
-  if [[ ! -f ${BISON30}/.built ]]; then
+  if [[ ! -f ${BISON34}/.built ]]; then
      wget ${BISON_URL}
-     tar xf ${BISON30}.tar.gz
-     cd ${BISON30}
+     tar xf ${BISON34}.tar.gz
+     cd ${BISON34}
      ./configure
      make install
      touch .built
