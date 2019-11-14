@@ -1,22 +1,18 @@
 .PHONY: all setup test install clean
 
-PYTHON := python
+PYTHON := python3
 PYOPENABE := pyopenabe
 
 all: $(PYOPENABE)
 
 setup:
-	virtualenv venv;
-	. venv/bin/activate && \
 	pip install -r requirements.txt;
 
 $(PYOPENABE): setup
-	. venv/bin/activate && \
 	$(PYTHON) setup.py build_ext --inplace; \
 	$(PYTHON) setup.py bdist --format=zip; \
 
 test:
-	. venv/bin/activate && \
 	$(PYTHON) test.py
 
 install:
