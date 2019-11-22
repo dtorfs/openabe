@@ -23,10 +23,13 @@ CXXFLAGS += -I$(ZROOT)/src
 CCFLAGS += -I$(INCLUDE_ROOT)
 CXXFLAGS += -I$(INCLUDE_ROOT)
 
-RELIC_LIB = -lrelic -lrelic_ec
+CCFLAGS += -fPIC
+CXXFLAGS += -fPIC
+
+RELIC_LIB = -l:librelic_s.a -l:librelic_s_ec.a
 GMP_LIB = -lgmp
 SSL_LIB = -lssl
-CRYPTO_LIB = -lcrypto
+CRYPTO_LIB = -lcrypto -lgmp
 RELIC_G =
 # commit: 1e3f62a3823f7e3db9d403f724fd9d66f5b04cf8 (as of 7/18/17)
 OPENSSL_VERSION := 1.1.1-dev
