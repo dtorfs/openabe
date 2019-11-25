@@ -1,4 +1,4 @@
-# Shared Makefile for 
+# Shared Makefile for
 
 CC = g++
 CXX = g++
@@ -46,9 +46,10 @@ endif
 
 # Set shared lib extension for each OS
 DEPS_PACKAGES = relic openssl gtest
+
 ADD_CFLAGS :=
 OS_CXXFLAGS :=
-WITH_BP := 
+WITH_BP :=
 
 ifeq ($(OS), Windows_NT)
     RELIC_OS := WINDOWS
@@ -69,7 +70,7 @@ ifeq ($(OS), Windows_NT)
     OS_OBJS += /mingw64/x86_64-w64-mingw32/lib/dllcrt1.o
     # for network func
     OS_LIBS += -lwsock32 -lws2_32
-    #ADD_FLAGS := 
+    #ADD_FLAGS :=
 else
     OS_NAME = $(shell uname -s)
     ifeq ($(OS_NAME), Linux)
@@ -117,8 +118,8 @@ CXXFLAGS += -Wall
 CXXFLAGS += -fstrict-overflow -Wsign-compare
 
 # Add debug symbols (we must remove these in a production build)
-CXXFLAGS += -g -O2 
-# uncomment to enable Address sanitizer 
+CXXFLAGS += -g -O2
+# uncomment to enable Address sanitizer
 #CXXFLAGS += -fsanitize=address -ggdb
 # uncomment to switch to afl-fuzz
 # CC="afl-gcc" # for linux
@@ -139,7 +140,7 @@ ifeq ($(ZML_LIB), with_openssl)
 else
   # relic-only build for math ops
   CXXFLAGS += $(OPENSSL_ZML)
-  CCFLAGS += -g -O2 $(OPENSSL_ZML) $(ADD_CFLAGS) 
+  CCFLAGS += -g -O2 $(OPENSSL_ZML) $(ADD_CFLAGS)
   OABELDLIBS = $(RELIC_LIB)
   OABELDSHLIBS = $(RELIC_LIB)
 endif

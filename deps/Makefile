@@ -2,16 +2,24 @@ include ../Makefile.common
 
 .PHONY: all clean
 
-DIRS=$(DEPS_PACKAGES)
-# relic openssl gtest
-all: $(DIRS)
-	mkdir -p root/lib
-	for d in $(DIRS); do \
-		make -C $$d; \
-	done
+# relic gtest and, optionally, openssl
+SYS_OPENSSL_VERSION := $(shell openssl version | cut -b 9-13 | tr -d .)
+export SYS_OPENSSL_VERSION
+ifeq (${SYS_OPENSSL_VERSION}, 111)
+ssl:
+	@echo
+else
+ssl:
+	make -C openssl
+endif
 
-clean: $(DIRS)
+all: ssl
+	mkdir -p root/lib
+	make -C relic
+	make -C gtest
+
+clean:
 	rm -rf root
-	for d in $(DIRS); do \
-		make -C $$d clean; \
-	done
+	make -C relic clean
+	make -C gtest clean
+	make -C openssl clean
