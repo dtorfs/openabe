@@ -203,7 +203,7 @@ function upgrade_bison() {
 # packages needed for Linux/Ubuntu distro
 function main_ubuntu() {
   sudo apt-get update
-  install_package python-pip
+#  install_package python-pip
 
   type pip >/dev/null 2>&1 || {
     fail "Could not find pip. please install it using 'sudo easy_install pip'";
@@ -222,11 +222,11 @@ function main_ubuntu() {
   install_package unzip
   install_package libglib2.0-dev
   install_package doxygen
-  install_package python3-setuptools
-  install_package python3-dev
-  install_package python3-pip
-  install_package nodejs
-  install_package npm
+#  install_package python3-setuptools
+#  install_package python3-dev
+#  install_package python3-pip
+#  install_package nodejs
+#  install_package npm
   upgrade_cmake
   upgrade_bison
   
