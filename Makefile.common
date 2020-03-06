@@ -15,8 +15,13 @@ LOCAL_INSTALL_BIN = /usr/local/bin
 
 # Include locations
 #  Dependencies (C/C++)
-CCFLAGS := -I$(DEPS_INSTALL_ZROOT)/include
-CXXFLAGS := -I$(DEPS_INSTALL_ZROOT)/include
+ifeq ($(ANDROID),1)
+    CCFLAGS := -I/root/android/sysroot/usr/include -I$(DEPS_INSTALL_ZROOT)/include -DANDROID
+    CXXFLAGS := -I/root/android/sysroot/usr/include -I$(DEPS_INSTALL_ZROOT)/include -DANDROID
+else
+    CCFLAGS := -I$(DEPS_INSTALL_ZROOT)/include
+    CXXFLAGS := -I$(DEPS_INSTALL_ZROOT)/include
+endif
 #  Local includes (for generated headers from bison/flex)
 CXXFLAGS += -I$(ZROOT)/src
 #  Common includes (C/C++)
@@ -129,6 +134,10 @@ CXXFLAGS += -g -O2
 
 LDFLAGS += -L$(DEPS_INSTALL_ZROOT)/lib -L$(OABE_LIB_ROOT) -L$(LOCAL_LIB_ROOT)
 
+ifeq ($(ANDROID),1)
+    LDFLAGS += -L/root/android/sysroot/usr/lib
+endif
+
 # Zeutro Math library config: RELIC vs OPENSSL
 # Look for environment variable ZML_LIB=with_openssl
 OPENSSL_ZML = -DSSL_LIB_INIT
@@ -146,6 +155,11 @@ else
 endif
 # remaining deps
 OABELDLIBS += $(SSL_LIB) $(CRYPTO_LIB)
+
+ifeq ($(ANDROID),1)
+    OABELDLIBS += -llog
+endif
+
 OABELDSHLIBS += $(SSL_LIB) $(CRYPTO_LIB)
 
 SHLIB_PATH = $(LDFLAGS)
